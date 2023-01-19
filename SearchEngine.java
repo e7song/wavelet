@@ -11,7 +11,7 @@ class Search implements URLHandler {
         //default
         if (url.getPath().equals("/")) {
             String instructions = 
-                    "Search Engine\nnAdd: /add?[word]\nPrint:/print\nSearch: /search?[word]";
+                    "Search Engine\nAdd: /add?[word]\nPrint:/print\nSearch: /search?[word]";
             return instructions;
         }
 
@@ -38,13 +38,8 @@ class Search implements URLHandler {
             for (int i = 0; i < repository.size(); i++) {
                 String repo = repository.get(i);
                 //iterate through repo to see if word is in it or is it
-                int range = repo.length() - search.length() - 1;
-                for (int j = 0; j < range; j++) {
-                    if (repo.substring(i, i + search.length()).equals(search)) {
-                        searchContents.add(repo);
-                        break;
-                    }
-
+                if (repo.contains(search) == true) {
+                    searchContents.add(repo);
                 }
             }
 
