@@ -18,7 +18,7 @@ class Search implements URLHandler {
         }
 
         else if (url.getPath().equals("sunnybunny")) {
-            File file = new File("wavelet/compliments.txt");
+            /*File file = new File("wavelet/compliments.txt");
             try {
                 Scanner compliment = new Scanner(file);
                 int line = (int) (Math.random() * 234);
@@ -36,7 +36,9 @@ class Search implements URLHandler {
                 return "";
             } catch (IOException E) {
                 return "File Error";
-            }
+            }*/
+
+            return ">3<!!";
             
         }
 
