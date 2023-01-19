@@ -32,6 +32,7 @@ class Search implements URLHandler {
                     String term = list.get(i);
                     //found word
                     if (word.equals(term)) {
+                        System.out.println("found word");
                         findings.add(term);
                     }
                     //skip if searched word is too big
@@ -43,6 +44,7 @@ class Search implements URLHandler {
                         //app
                         for (int j = 0; j < term.length()-word.length(); j++) {
                             if (word.equals(term.substring(i, i + word.length()))) {
+                                System.out.println(term);
                                 findings.add(term);
                             }
                         }
@@ -59,8 +61,11 @@ class Search implements URLHandler {
             }
         }
 
-        //wrong path
-        return "Invalid Path";
+        if (url.getPath().equals("/")) {
+            return "Search Engine";
+        }
+
+        return "";
 
     }
 }
