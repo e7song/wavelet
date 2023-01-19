@@ -17,7 +17,7 @@ class Search implements URLHandler {
             return instructions;
         }
 
-        else if (url.getPath().equals("sunnybunny")) {
+        else if (url.getPath().equals("/sunnybunny")) {
             /*File file = new File("wavelet/compliments.txt");
             try {
                 Scanner compliment = new Scanner(file);
