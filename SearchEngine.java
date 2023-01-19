@@ -15,6 +15,12 @@ class Search implements URLHandler {
             return instructions;
         }
 
+        /*else if (url.getRawPath().equals("/searchbar")) {
+            Server.output("Search for the object: ");
+
+
+        }*/
+
         //add
         else if (url.getPath().equals("/add")) {
             String added = url.getQuery();
