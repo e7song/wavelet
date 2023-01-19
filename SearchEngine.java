@@ -5,67 +5,56 @@ import java.util.ArrayList;
 class Search implements URLHandler {
     // The one bit of state on the server: a number that will be manipulated by
     // various requests.
-    ArrayList<String> list = new ArrayList<>();
+    ArrayList<String> repository = new ArrayList<>();
 
     public String handleRequest(URI url) {
+        //default
+        if (url.getPath().equals("/")) {
+            String instructions = 
+                    "Search Engine\nnAdd: /add?[word]\nPrint:/print\nSearch: /search?[word]";
+            return instructions;
+        }
 
         //add
-        if (url.getPath().equals("/add")) {
-            try {
-                String[] query = url.getQuery().split("=");
-                String word = query[1];
-                list.add(word);
-                return "Successfully Added!";
-            } catch(Exception E) {
-                return "Unsuccessful. Syntax: /add?s=[word]";
-            }
-
+        else if (url.getPath().equals("/add")) {
+            String added = url.getQuery();
+            repository.add(added);
+            return "Added " + added;
         }
+
+        //print
+
+        else if (url.getPath().equals("/print")) {
+            return repository.toString();
+        }
+
         //search
-        if (url.getPath().equals("/search")) {
-            ArrayList<String> findings = new ArrayList<>();
-            try {
-                String[] query = url.getQuery().split("=");
-                String word = query[1];
-                
-                for (int i = 0; i < list.size(); i++) {
-                    String term = list.get(i);
-                    //found word
-                    if (word.equals(term)) {
-                        System.out.println("found word");
-                        findings.add(term);
-                    }
-                    //skip if searched word is too big
-                    if (word.length() > term.length()) {
-                        continue;
-                    } else {
-                        //find
-                        //pineapple
-                        //app
-                        for (int j = 0; j < term.length()-word.length(); j++) {
-                            if (word.equals(term.substring(i, i + word.length()))) {
-                                System.out.println(term);
-                                findings.add(term);
-                            }
-                        }
+        else if (url.getPath().equals("/search")) {
+            String search = url.getQuery();
+            //search contents
+            ArrayList<String> searchContents = new ArrayList<>();
+
+            //check through each word that is added into the repository
+            for (int i = 0; i < repository.size(); i++) {
+                String repo = repository.get(i);
+                //iterate through repo to see if word is in it or is it
+                int range = repo.length() - search.length() - 1;
+                for (int j = 0; j < range; j++) {
+                    if (repo.substring(i, i + search.length()).equals(search)) {
+                        searchContents.add(repo);
+                        break;
                     }
 
-                    if (findings.size() == 0) {
-                        return "Nothing Found.";
-                    } else {
-                        return findings.toString();
-                    }
                 }
-            } catch (Exception E) {
-                return "ERROR";
             }
+
+            return searchContents.toString();
         }
 
-        if (url.getPath().equals("/")) {
-            return "Search Engine";
+        else {
+            return "Function not Supported";
         }
-
-        return "";
+        
 
     }
 }
