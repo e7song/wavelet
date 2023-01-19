@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.*;
 
 class Search implements URLHandler {
     // The one bit of state on the server: a number that will be manipulated by
@@ -13,6 +15,29 @@ class Search implements URLHandler {
             String instructions = 
                     "Search Engine\nAdd: /add?[word]\nPrint:/print\nSearch: /search?[word]";
             return instructions;
+        }
+
+        else if (url.getPath().equals("sunnybunny")) {
+            File file = new File("wavelet/compliments.txt");
+            try {
+                Scanner compliment = new Scanner(file);
+                int line = (int) (Math.random() * 234);
+                int count = 0;
+                while (compliment.hasNext()) {
+                    String compli = compliment.nextLine();
+                    count++;
+                    if (count == line) {
+                        compliment.close();
+                        return compli;
+                    }
+                    
+                }
+                compliment.close();
+                return "";
+            } catch (IOException E) {
+                return "File Error";
+            }
+            
         }
 
         /*else if (url.getRawPath().equals("/searchbar")) {
